@@ -1,10 +1,10 @@
-package Q1_Q2;
-public class PilhaArray4 implements Pilha {
+package Q1_Q2_Q4;
+public class PilhaArray1 implements Pilha {
     private int topo;
     private int capacity;
     private Object[] pilha;
 
-    PilhaArray4(int tam, int topo){ 
+    PilhaArray1(int tam, int topo){ 
         this.topo = topo;
         this.pilha = new Object[tam];
         this.capacity = tam;
@@ -27,12 +27,12 @@ public class PilhaArray4 implements Pilha {
     }
     public void push(Object o){ // insere um elemento
         if(this.topo == this.capacity) {
-            Object[] newPilha = new Object[this.capacity*2];
+            Object[] newPilha = new Object[this.capacity+10];
             for(int i = 0 ; i < this.topo; i++) {
                 newPilha[i] = this.pilha[i];
             }
             this.pilha = newPilha;
-            this.capacity *= 2;
+            this.capacity += 10;
         }
         this.pilha[this.topo] = o;
         this.topo ++;
@@ -46,11 +46,12 @@ public class PilhaArray4 implements Pilha {
         return lastElement;
     }
     
-    public void status() {
+    public void status() {// O(n)
         for(int i = 0 ; i < this.topo ; i++) {
             System.out.println(this.pilha[i]);
         }
     }
+
     public boolean Empty() throws PilhaVaziaExcecao { // O(n)
         for(int i = 0 ; i < this.topo ; i ++) {
             this.pilha[i] = null;

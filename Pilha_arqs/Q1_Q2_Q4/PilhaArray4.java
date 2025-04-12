@@ -1,10 +1,10 @@
-package Q1_Q2;
-public class PilhaArray2 implements Pilha {
+package Q1_Q2_Q4;
+public class PilhaArray4 implements Pilha {
     private int topo;
     private int capacity;
     private Object[] pilha;
 
-    PilhaArray2(int tam, int topo){ 
+    PilhaArray4(int tam, int topo){ 
         this.topo = topo;
         this.pilha = new Object[tam];
         this.capacity = tam;
@@ -27,12 +27,12 @@ public class PilhaArray2 implements Pilha {
     }
     public void push(Object o){ // insere um elemento
         if(this.topo == this.capacity) {
-            Object[] newPilha = new Object[this.capacity+100];
+            Object[] newPilha = new Object[this.capacity*2];
             for(int i = 0 ; i < this.topo; i++) {
                 newPilha[i] = this.pilha[i];
             }
             this.pilha = newPilha;
-            this.capacity += 100;
+            this.capacity *= 2;
         }
         this.pilha[this.topo] = o;
         this.topo ++;

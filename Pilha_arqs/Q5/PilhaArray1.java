@@ -1,4 +1,4 @@
-package Q1_Q2;
+package Q5;
 public class PilhaArray1 implements Pilha {
     private int topo;
     private int capacity;
