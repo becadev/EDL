@@ -13,18 +13,25 @@
  */
 public class testePilha {
 
-	public static void main(String[] args) {		
-		Integer[] b = new Integer[1];		
+	public static void main(String[] args) {				
 		PilhaArray pp = new PilhaArray(1,0); // 1 => criação de uma pilha com 1 espaço | 0 =>  indice para controlar a posição do topo (ultimo elemento inserido) nesse caso nao tem nenhum elemento
-		System.out.println("inserindo");
-		for(int f=0;f<10;f++){
-		  System.out.println(f);		  
-		  pp.push(new Integer(f));
-		}
-		System.out.println("retirando");
-		for(int f=0;f<10;f++){
-			  System.out.print(f);
-			  System.out.println(" - "+pp.pop());
-		}
+		pp.push(5);
+		pp.push(3);
+		pp.pop();
+		pp.push(2);
+		pp.push(8);
+		pp.pop();
+		pp.pop();
+		pp.push(9);
+		pp.push(1);
+		pp.pop();
+		pp.push(7);
+		pp.push(6);
+		pp.pop();
+		pp.pop();
+		pp.push(4);
+		pp.pop();
+		pp.pop();
+		pp.status();
 	}
 }

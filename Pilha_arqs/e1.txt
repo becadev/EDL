@@ -1,0 +1,31 @@
+        
+		
+		pp.status();
+		pp.push(2);
+		pp.status();
+		pp.push(8);
+		pp.status();
+		pp.pop();
+		pp.status();
+		pp.pop();
+		pp.status();
+		pp.push(9);
+		pp.status();
+		pp.push(1); 
+		pp.status();
+		pp.pop();
+		pp.status();
+		pp.push(7);
+		pp.status();
+		pp.push(6);
+		pp.status();
+		pp.pop();
+		pp.status();
+		pp.pop();
+		pp.status();
+		pp.push(4);
+		pp.status();
+		pp.pop();
+		pp.status();
+		pp.pop();
+		pp.status();
