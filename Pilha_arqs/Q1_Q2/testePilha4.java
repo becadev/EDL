@@ -1,3 +1,4 @@
+package Q1_Q2;
 /*
  * Created on 01/09/2004
  *
@@ -15,10 +16,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.Scanner;
-public class testePilha1 {
+
+public class testePilha4 {
 
 	public static void main(String[] args) {				
-		PilhaArray1 pp = new PilhaArray1(1,0); // 1 => criação de uma pilha com 1 espaço | 0 =>  indice para controlar a posição do topo (ultimo elemento inserido) nesse caso nao tem nenhum elemento
+		PilhaArray4 pp = new PilhaArray4(1,0); // 1 => criação de uma pilha com 1 espaço | 0 =>  indice para controlar a posição do topo (ultimo elemento inserido) nesse caso nao tem nenhum elemento
 		long beg = System.currentTimeMillis();
 		Scanner sc = new Scanner(System.in);
 		int n = 0;

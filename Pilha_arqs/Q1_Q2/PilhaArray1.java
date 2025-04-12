@@ -1,3 +1,4 @@
+package Q1_Q2;
 public class PilhaArray1 implements Pilha {
     private int topo;
     private int capacity;
@@ -45,9 +46,17 @@ public class PilhaArray1 implements Pilha {
         return lastElement;
     }
     
-    public void status() {
+    public void status() {// O(n)
         for(int i = 0 ; i < this.topo ; i++) {
             System.out.println(this.pilha[i]);
         }
+    }
+
+    public boolean Empty() throws PilhaVaziaExcecao { // O(n)
+        for(int i = 0 ; i < this.topo ; i ++) {
+            this.pilha[i] = null;
+        }
+        this.topo = 0;
+        return true;
     }
 }

@@ -1,3 +1,4 @@
+package Q3;
 /*
  * Created on 19/09/2004
  *
@@ -16,6 +17,7 @@
 public interface Pilha {    
     public int size();    
     public boolean isEmpty();
+    public boolean Empty() throws PilhaVaziaExcecao;
     public Object top() throws PilhaVaziaExcecao;
     public void push(Object o);
     public Object pop() throws PilhaVaziaExcecao;

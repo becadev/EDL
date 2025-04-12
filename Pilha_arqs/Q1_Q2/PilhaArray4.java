@@ -1,9 +1,10 @@
-public class PilhaArray2 implements Pilha {
+package Q1_Q2;
+public class PilhaArray4 implements Pilha {
     private int topo;
     private int capacity;
     private Object[] pilha;
 
-    PilhaArray2(int tam, int topo){ 
+    PilhaArray4(int tam, int topo){ 
         this.topo = topo;
         this.pilha = new Object[tam];
         this.capacity = tam;
@@ -49,5 +50,12 @@ public class PilhaArray2 implements Pilha {
         for(int i = 0 ; i < this.topo ; i++) {
             System.out.println(this.pilha[i]);
         }
+    }
+    public boolean Empty() throws PilhaVaziaExcecao { // O(n)
+        for(int i = 0 ; i < this.topo ; i ++) {
+            this.pilha[i] = null;
+        }
+        this.topo = 0;
+        return true;
     }
 }
