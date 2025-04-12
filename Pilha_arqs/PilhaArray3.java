@@ -1,9 +1,9 @@
-public class PilhaArray implements Pilha {
+public class PilhaArray3 implements Pilha {
     private int topo;
     private int capacity;
     private Object[] pilha;
 
-    PilhaArray(int tam, int topo){ 
+    PilhaArray3(int tam, int topo){ 
         this.topo = topo;
         this.pilha = new Object[tam];
         this.capacity = tam;
