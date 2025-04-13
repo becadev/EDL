@@ -12,10 +12,7 @@ package Q5;
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.util.Scanner;
+
 public class testePilhaColorida {
 	public static void main(String[] args) {				
 		PilhaColorida pc = new PilhaColorida(4,5); // 4 = tamanho da pilha vermelha | 5 = tamanho da pilha preta | pilha colorida terá tamanho igual a 11(a soma das duas pilhas mais dois)
