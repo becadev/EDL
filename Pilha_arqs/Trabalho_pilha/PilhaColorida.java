@@ -1,4 +1,4 @@
-package Trabalho_pílha;
+package Trabalho_pilha;
 
 public class PilhaColorida implements Pilha {
     private int topoVermelho;
@@ -7,9 +7,9 @@ public class PilhaColorida implements Pilha {
     private int n;
 
     PilhaColorida(int nv, int np){  // nv = tamanho pilha vermelha, np = tamanho pilha preta
-        this.n = nv+np+2;
+        this.n = nv+np+1;
         this.topoVermelho = -1;
-        this.topoPreto = this.n-1;
+        this.topoPreto = this.n;
         this.pilhaColorida = new Object[this.n];
     }
     public int sizeColorida(){ // qunatidade de elementos na pilha colorida e pilha preta;
@@ -33,12 +33,17 @@ public class PilhaColorida implements Pilha {
 
     private void increase_capcity() {
         Object[] newPilha = new Object[this.n*2];
-        for(int i = 0 ; i < this.topoVermelho; i++) { // Salva a pilha preta
+        for(int i = 0 ; i <= this.topoVermelho; i++) { // Salva a pilha preta
             newPilha[i] = this.pilhaColorida[i];
         }
-        int newTopoPreto = this.n-this.topoPreto;
-        for(int i = this.n*2 ; i > ((this.n*2)-newTopoPreto); i--) { // Salva a pilha preta
-            newPilha[i] = this.pilhaColorida[i];
+
+        int tamPreto = this.n - this.topoPreto; // tamanho da pilha preta
+        this.topoPreto = ((this.n*2)- tamPreto); // novo topo preto na pilha redimensionada
+        int tam = this.n-1;
+
+        for(int i = this.n*2-1 ; i >= this.topoPreto; i--) { // Salva a pilha preta
+            newPilha[i] = this.pilhaColorida[tam];
+            tam--;
         }
         this.pilhaColorida = newPilha;
         this.n *= 2;
@@ -54,7 +59,7 @@ public class PilhaColorida implements Pilha {
 
     public Object topVermelho() throws PilhaVaziaExcecao { // retorna o último elemento inserido na pilha vermelha sem removê-lo
         if(!isEmptyVermelha())
-            return this.pilhaColorida[this.topoVermelho - 1];
+            return this.pilhaColorida[this.topoVermelho];
         else
             throw new PilhaVaziaExcecao(null);
     }
@@ -84,9 +89,34 @@ public class PilhaColorida implements Pilha {
         if (isEmptyVermelha()) {
             throw new PilhaVaziaExcecao(null);
         }
-        Object lastElement = this.pilhaColorida[this.topoVermelho-1];
+        Object lastElement = this.pilhaColorida[this.topoVermelho];
+        if(sizeColorida() <= Math.abs(this.n/3)){
+            reducaoPilha();
+        }
+        this.pilhaColorida[this.topoVermelho] = null;
         this.topoVermelho--;
         return lastElement;
+    }
+
+    private void reducaoPilha() {
+        int newN = Math.abs(this.n/3)+1;
+        Object[] newPilha = new Object[newN];
+
+        for(int i = 0 ; i < this.topoVermelho ; i++){
+            newPilha[i] = this.pilhaColorida[i];
+        }
+
+
+        int tamPreto = this.n - this.topoPreto; // tamanho da pilha preta
+        this.topoPreto = newN- tamPreto; // novo topo preto na pilha redimensionada
+        int tam = this.n-1;
+
+        for(int i = this.n*2-1 ; i >= this.topoPreto; i--) { // Salva a pilha preta
+            newPilha[i] = this.pilhaColorida[tam];
+            tam--;
+        }
+        this.pilhaColorida = newPilha;
+        this.n = newN;
     }
 
     public Object popPreto() throws PilhaVaziaExcecao { //remove e returna o último elemento inserido n apilha preto
@@ -94,13 +124,19 @@ public class PilhaColorida implements Pilha {
             throw new PilhaVaziaExcecao(null);
         }
         Object lastElement = this.pilhaColorida[this.topoPreto];
+        if(sizeColorida() <= Math.abs(this.n/3)){
+            reducaoPilha();
+        }
+
+        this.pilhaColorida[this.topoPreto] = null;
         this.topoPreto++;
         return lastElement;
     }
 
     public void status() {// O(n)
         for(int i = 0 ; i < this.n ; i++) {
-            System.out.println(this.pilhaColorida[i]);
+            System.out.print(this.pilhaColorida[i] + " ");
         }
+        System.out.println("\n");
     }
 }

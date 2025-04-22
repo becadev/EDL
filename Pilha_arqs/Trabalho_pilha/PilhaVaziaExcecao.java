@@ -1,4 +1,4 @@
-package Trabalho_pílha;
+package Trabalho_pilha;
 
 public class PilhaVaziaExcecao extends RuntimeException {
     public PilhaVaziaExcecao(String err){

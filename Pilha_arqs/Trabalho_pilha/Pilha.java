@@ -1,4 +1,4 @@
-package Trabalho_pílha;
+package Trabalho_pilha;
 
 // especifica todos os métodos obrigatórios que deverão ter na pilha
 public interface Pilha {
