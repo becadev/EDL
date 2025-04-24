@@ -15,6 +15,8 @@ public class FilaArray implements Fila{
     }
 
     public int size() {
+        if(this.f == this.i)
+            return this.n-this.i+(this.f);
         return (this.n - this.i + this.f)%this.n;
     }
 
@@ -29,8 +31,16 @@ public class FilaArray implements Fila{
     }
 
     public void enqueue(Object o) {
-        if(this.f+1 == this.i)
-            increaseCapacity();
+//        if(this.f+1 == this.i )
+//          increaseCapacity();
+//        if((this.f+1)%this.n+1 == this.i) // isso aq ta errado mas ta quase certo
+//            increaseCapacity();
+//        else if(this.f == this.n){
+//            this.f = (this.f+1)%this.n;
+//        }
+        if(this.f == this.n){
+            this.f = (this.f+1)%this.n;
+        }
         this.fila[this.f] = o;
         this.f = (this.f+1)%this.n;
     }
@@ -38,13 +48,16 @@ public class FilaArray implements Fila{
     private void increaseCapacity() {
         Object[] newFila = new Object[this.n*2];
 
-        for (int i = this.i; i < this.n - 1; i++)
-                newFila[i] = this.fila[i];
-
+        int i2 = this.i;
+        for (int i = 0; i2 < this.n; i++) {
+            newFila[i] = this.fila[i2];
+            i2++;
+        }
         // caso a fila seja configuração quebrada
         if(this.f < this.i) {
-            for (int i = this.f; i < this.i - 1; i++)
-                newFila[i] = this.fila[i];
+            int tamf = this.f+1;
+            for (int i = i2+1; i < i2+1+tamf; i++)
+                newFila[i2] = this.fila[this.f];
         }
 
         this.fila = newFila;
@@ -58,7 +71,15 @@ public class FilaArray implements Fila{
         if(isEmpty())
             throw new EFilaVazia(null);
         Object o = this.fila[this.i];
+        this.fila[this.i] = null;
         this.i = (this.i + 1)%this.n;
         return o;
+    }
+
+    public void status() {// O(n)
+        for(int i = 0 ; i < this.n ; i++) {
+            System.out.print(this.fila[i] + " ");
+        }
+        System.out.println("\n");
     }
 }
