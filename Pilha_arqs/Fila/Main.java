@@ -4,12 +4,12 @@ public class Main {
         FilaArray f = new FilaArray(5);
 
         System.out.println("Teste isEmpty: " + f.isEmpty());
-
+        System.out.println("Teste size: " + f.size());
         f.enqueue(1);
         f.enqueue(2);
         f.enqueue(3);
         f.enqueue(4);
-
+        System.out.println("Teste size pos enqueue: " + f.size());
         System.out.println("Status da fila: ");
         f.status();
 
@@ -21,12 +21,6 @@ public class Main {
 
         System.out.println("Teste dequeue: " + f.dequeue());
         f.status();
-        /*
-        * Quando for fazer a quebra da fila, ele pode ficar [6 2 3 4 5]
-        * pq a fila nunca pode ficar com cheia, sempre tem que ter 1 espaço sobrando
-        * então nesse caso teria que aumentar a capacidade, mas se fosse maior tipo: 6 null 2 3 4 5
-        * ai daria certo
-        * */
 
         System.out.println("Teste de fila config quebrada");
         f.enqueue(5);

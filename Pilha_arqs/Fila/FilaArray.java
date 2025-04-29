@@ -15,15 +15,11 @@ public class FilaArray implements Fila{
     }
 
     public int size() {
-        if(this.f == this.i)
-            return this.n-this.i+(this.f);
-        return (this.n - this.i + this.f)%this.n;
+        return (this.n - this.i + this.f) % this.n;
     }
 
     public boolean isEmpty() {
-        if(this.i == this.f)
-            return true;
-        return false;
+        return this.i == this.f;
     }
 
     public Object first() throws EFilaVazia { // retorna o elemento do inicio da fila sem remover
@@ -31,40 +27,24 @@ public class FilaArray implements Fila{
     }
 
     public void enqueue(Object o) {
-//        if(this.f+1 == this.i )
-//          increaseCapacity();
-//        if((this.f+1)%this.n+1 == this.i) // isso aq ta errado mas ta quase certo
-//            increaseCapacity();
-//        else if(this.f == this.n){
-//            this.f = (this.f+1)%this.n;
-//        }
-        if(this.f == this.n){
-            this.f = (this.f+1)%this.n;
-        }
+        if(size() == this.n-1)
+            increaseCapacity();
         this.fila[this.f] = o;
         this.f = (this.f+1)%this.n;
     }
 
     private void increaseCapacity() {
         Object[] newFila = new Object[this.n*2];
-
         int i2 = this.i;
-        for (int i = 0; i2 < this.n; i++) {
+
+        for (int i = 0; i <= size(); i++) {
             newFila[i] = this.fila[i2];
-            i2++;
+            i2 = (i2 + 1) % this.n;
         }
-        // caso a fila seja configuração quebrada
-        if(this.f < this.i) {
-            int tamf = this.f+1;
-            for (int i = i2+1; i < i2+1+tamf; i++)
-                newFila[i2] = this.fila[this.f];
-        }
-
         this.fila = newFila;
-        this.n*=2;
-        this.f = this.i;
+        this.f = size();
+        this.n *= 2;
         this.i = 0;
-
     }
 
     public Object dequeue() throws EFilaVazia {
