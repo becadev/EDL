@@ -1,27 +1,22 @@
 package PilhaEncadeada;
 
 public class PilhaEncadeada implements Pilha{
-    private No no;
     private No topo;
     private int n;
 
     public PilhaEncadeada() {
         this.topo = null;
-        this.no = null;
         this.n = 0;
     }
 
-    @Override
     public int size() {
         return this.n;
     }
 
-    @Override
     public boolean isEmpty() { // pilha está vaiza?
         return this.topo == null;
     }
 
-    @Override
     public Object top() throws PilhaVaziaExcecao {
         return this.topo.getElemento();
     }
