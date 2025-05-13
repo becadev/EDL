@@ -31,39 +31,40 @@ public class FilaArray implements Fila{
         if(isEmpty())
             return new PilhaVaziaExcecao(null);
         int ff = size() - 1;
-        for(int i = 0 ; i < size() ; i++) { // colocando na pilha secundaria para inverter a ordem
-           pilhaSaida[i] = pilhaEntrada[ff];
+        for(int i = 0 ; i < size() ; i++) { // colocando na pilha saida para inverter a ordem
+           this.pilhaSaida[i] = this.pilhaEntrada[ff];
            ff--;
         }
         Object first = pilhaSaida[size()-1];
         ff = size() - 1;
-        for (int i = 0 ; i < size() ; i ++) { // colocado de novo na pilha principal
+        for (int i = 0 ; i < size() ; i ++) { // colocado de novo na pilha de entrada
             pilhaEntrada[i] = pilhaSaida[ff];
             ff --;
         }
-        System.out.println(ff);
         return first;
     }
     private void increaseCapacity() {
         Object[] newPilhaEntrada = new Object[2*this.n];
         Object[] newSaida = new Object[2*this.n];
         int tt = size() - 1;
-        for(int i = 0 ; i < size() - 1 ; i++) {
+        for(int i = 0 ; i < size() ; i++) {
             newSaida[i] = this.pilhaEntrada[tt];
-            tt --;
+//            System.out.print(newSaida[i] + " ");
+            tt--;
         }
         tt = size() - 1;
-        for(int i = 0 ; i < size() - 1 ; i++) {
+        for(int i = 0 ; i < size() ; i++) {
             newPilhaEntrada[i] = newSaida[tt];
             tt--;
         }
         this.pilhaEntrada = newPilhaEntrada;
+        this.pilhaSaida = newSaida;
         this.n*=2;
     }
 
     public void enqueue(Object o) {
-//       if(this.t + 1 == this.n)
-//            increaseCapacity();
+       if (size() + 1 > this.n)
+            increaseCapacity();
         this.pilhaEntrada[this.t+1] = o;
         this.t ++;
     }
@@ -75,15 +76,16 @@ public class FilaArray implements Fila{
             this.pilhaEntrada[this.t] = null;
             this.t = -1;
         } else {
-            int f2 = this.t-1;
-            for (int i = 0; i <= this.t; i++) { // vai colocar na pilha saida para poder pegar o primeiro para fazer dequeue
+            int f2 = this.t; // variavel para fazer decremento na pilha com os elementos
+            for (int i = 0; i < this.t; i++) { // vai colocar na pilha saida para poder pegar o primeiro para fazer dequeue
                 this.pilhaSaida[i] = this.pilhaEntrada[f2];
                 f2--;
             }
             o = pilhaEntrada[f2]; // elemento que vai ser dequeuado
             pilhaEntrada[f2] = null; // colocando como vazio
-            int ii = size() - 2;
-            for (int i = 0; i < size(); i++) { // vai voltar tudo pra pilha entrada
+            int ii = size() - 2; // variavel para acessar a pilha que foi invertida
+            this.t--; // atuyaliza topo
+            for (int i = 0; i < size(); i++) { // desenvertendo a pilha
                 pilhaEntrada[i] = pilhaSaida[ii];
                 ii--;
             }
@@ -96,6 +98,10 @@ public class FilaArray implements Fila{
             System.out.println(this.pilhaEntrada[i] + " ");
         }
         System.out.print('\n');
+    }
+
+    public int capacity() {
+        return this.n;
     }
 }
 
