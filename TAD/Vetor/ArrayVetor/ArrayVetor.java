@@ -12,7 +12,7 @@ public class ArrayVetor implements Vetor{
     }
 
     public Object elemeaAtRank(int r) { //retornar elemento na colocação r sem remover
-        return this.vetor[r]; // Dúvida: é colocação de tipo "terceira colocação" ou "terceiro indice"?
+        return this.vetor[r]; // é colocação de tipo "terceira posição"
     } // O(1)
 
     public Object replaceAtRank(int r, Object o) throws ArrayVetorException{ // substituir elemento do indice r por o e retornar o elemento que estava em r
