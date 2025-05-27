@@ -1,61 +1,92 @@
 package Vetor.VetorLinkedList;
 
 public class LinkedVetor implements Vetor {
-    private no primeiro;
+    private No primeiro;
     private int n = 0;
 
-    public Object elemeaAtRank(int r) throws LinkedListVetorException{  //retornar elemento na colocação r sem remover
+    LinkedVetor() {
+        this.n = 0;
+    }
+    public Object elemeaAtRank(int r) throws LinkedListVetorException {  //retornar elemento na colocação r sem remover
         if(isEmpty() && r > this.n)
             throw new LinkedListVetorException(null);
         
         No element = primeiro;
-        for(int i = 1 ; i <= this.n ; i++) {
-            if(i == r) return element;
+        for(int i = 1 ; i < r ; i++) {
             element = element.next;
         }
-        return element;
+        return element.chave;
     }
 
-    public Object replaceAtRank(int r, Object o) { // // substituir elemento do indice r por o e retornar o elemento que estava em r
+    public Object replaceAtRank(int r, Object o) throws LinkedListVetorException  { // // substituir elemento do indice r por o e retornar o elemento que estava em r
         if(isEmpty() && r > this.n)
             throw new LinkedListVetorException(null);
-        No newNo = new No(o);
+//        No newNo = new No(o);
         No element = primeiro;
-        for (int i = 1 ; i <= r ; i++) { // percorre até a colocação r
+        for (int i = 1 ; i < r ; i++) { // percorre até a colocação r
             element = element.next;
         }
-        No oldNo = element;
-        newNo.next = element.next;
-        newNo.prev = element.prev;
+        Object oldNo = element.chave;
+        element.chave = o;
         return oldNo;
     }
 
-    public void insertAtRank(int r, Object o) { // insere um novo elemento o na colocação r
-        if(isEmpty() && r > this.n)
+    public void insertAtRank(int r, Object o)  throws LinkedListVetorException { // insere um Novo elemento o na colocação r
+        if (r < 0 )
             throw new LinkedListVetorException(null);
 
         No newNo = new No(o);
-        No element = primeiro;
+        if (isEmpty()) { // primeiro elemento
+            this.primeiro =  newNo;
+            this.n++ ;
+            return;
+        }
 
-        for(int i = 1 ; i <= r ; i ++) {
+        if(r == 1) {
+            newNo.next = primeiro;
+            primeiro.prev = newNo;
+            primeiro = newNo;
+            this.n++;
+            return;
+        }
+        No element = primeiro;
+        for (int i = 1; i <= r; i++) {
+            if(element.next == null){
+                element.next = newNo;
+                newNo.prev = element;
+                break;
+            }
             element = element.next;
         }
-        newNo.next = element;
-        newNo.prev = element.prev;
+        this.n++ ;
     }
 
-    public Object removeAtRank(int r) { // remove e retorna o elemento na colocação r
+
+    public Object removeAtRank(int r){ // remove e retorna o elemento na colocação r
         if(isEmpty() && r > this.n)
             throw new LinkedListVetorException(null);
         No element = primeiro;
-        for(int i = 1 ; i <= r ; i ++) {
+
+        if(r == 1) {
+            Object oldNo = primeiro.chave;
+            primeiro = primeiro.next;
+            primeiro.prev = null;
+            this.n--;
+            return oldNo;
+        }
+
+        for(int i = 1 ; i < r ; i ++) {
             element = element.next;
         }
-        No oldNo = element;
+        Object oldNo = element.chave;
+
         No nextAoRemovido =  element.next;
-        No prevAoRemovido =  element.next;
+        No prevAoRemovido =  element.prev;
 
         prevAoRemovido.next = nextAoRemovido;
+        nextAoRemovido.prev =  prevAoRemovido;
+
+        this.n--;
         return oldNo;
     }
 
@@ -65,5 +96,14 @@ public class LinkedVetor implements Vetor {
 
     public Boolean isEmpty() {
         return this.n == 0;
+    }
+
+    public void status() {
+        No elemento = this.primeiro;
+        for (int i = 0 ; i < this.n ; i ++){
+            System.out.print(elemento.chave + " ");
+            elemento = elemento.next;
+        }
+        System.out.print('\n');
     }
 }
