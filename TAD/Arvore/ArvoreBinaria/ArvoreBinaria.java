@@ -166,12 +166,12 @@ public class ArvoreBinaria implements AB {
                 return v;
             }
             Comparable chave = (Comparable) v.getChave();
-            if (chave.compareTo(k.getChave()) < 0) {// v < k então vai para esquerda
-                v.setFilhoLeft(insercao(v.getFilhoLeft(), k));
-                v.getFilhoLeft().setPai(v);
-            } else if (chave.compareTo(k.getChave()) > 0) {// v > k então vai para direita
+            if (chave.compareTo(k.getChave()) < 0) {// v > k então vai para direita
                 v.setFilhoRight(insercao(v.getFilhoRight(), k));
                 v.getFilhoRight().setPai(v);
+            } else if (chave.compareTo(k.getChave()) > 0) {// v < k então vai para esquerda
+                v.setFilhoLeft(insercao(v.getFilhoLeft(), k));
+                v.getFilhoLeft().setPai(v);
             }
         }
         return v;
@@ -182,12 +182,16 @@ public class ArvoreBinaria implements AB {
         No v = treeSearch(k, this.root); // retorna o nó que tem esse objeto
         if (v == null) return;
         if (v.qtdFilhos() == 0) {
+            System.out.println("ta entrando no caso 1");
             Caso01remocao(v);
         } else if (v.qtdFilhos() == 1) {
+            System.out.println("ta entrando no caso 2");
             Caso02remocao(v, k);
         } else if (v.qtdFilhos() == 2) {
+            System.out.println("ta entrando no caso 3");
             Caso03remocao(v, k);
         }
+        this.tamanho--;
     }
 
     public void Caso01remocao(No k) { // caso folha, nao tem filhos
@@ -197,19 +201,27 @@ public class ArvoreBinaria implements AB {
             return;
         }
         Object chave = comparable(k.getChave(), paideK.getChave());
-        if (k.getChave() == chave) {//  paideK > k então k ta na esquerda
-            paideK.setFilhoLeft(null);
+        if (k.getChave() == chave) {//  paideK < k então k ta na direita
+            paideK.setFilhoRight(null);
+            return;
         }
-        paideK.setFilhoRight(null); //  paideK < k então k ta na direita
+        paideK.setFilhoLeft(null); // paideK > k então k ta na esquerda
     }
 
     public void Caso02remocao(No v, Object k) { // tem um filho
         if (v.getFilhoLeft() != null) { // o filho que v tem é o esquerdo
             No filhodeV = v.getFilhoLeft();
             filhodeV.setPai(v.getPai());
+            System.out.println("pai do filho de v" + filhodeV.getPai().getChave() + " v = " + v.getChave() + "filho esquerdo de v =  " + v.getFilhoLeft().getChave() + "filho direito de v =  " + v.getFilhoRight());
+            No paideV = v.getPai();
+            paideV.setFilhoLeft(filhodeV);
+            return;
         } // senão o filho que v tem é direito
         No filhodeV = v.getFilhoRight();
         filhodeV.setPai(v.getPai());
+        System.out.println("direito" + filhodeV.getPai().getChave());
+        No paideV = v.getPai();
+        paideV.setFilhoRight(filhodeV);
     }
 
     public void Caso03remocao(No v, Object k) { // tem dois filhos, será reajeitado com o menor da subarvore a direita
@@ -228,9 +240,10 @@ public class ArvoreBinaria implements AB {
 
     public Object comparable(Object v, Object k) {
         Comparable chave = (Comparable) v;
-        if (chave.compareTo(k) < 0)// v < k então k ta na direita
+        if (chave.compareTo(k) < 0)// v > k então k ta na esquerda
             return v;
-            // v > k então k ta na esquerda
+            // v < k então k ta na direita
+        System.out.println("v<k " + k + " " + v);
         return k;
     }
 

@@ -8,6 +8,8 @@ public class No {
     No(Object chave){
         this.chave = chave;
         this.filhos = new No[2];
+        this.filhos[0] = null;
+        this.filhos[1] = null;
     }
 
     public Object getChave() {

@@ -116,12 +116,42 @@ public class Teste {
         System.out.println(t.height(no6));
 
 
-
         System.out.println("---------------------------------------");
         System.out.println("Teste nos(): ");
         System.out.println(t.nos());
+
+        System.out.println("_._._._._._._._._._._._._._._._._._._._.");
+        System.out.println("Elementos antes da remoção: ");
+        System.out.println(t.elements());
+        System.out.println("---------------------------------------");
+        System.out.println("Teste remocao(): ");
+        System.out.println("Caso 1: ");
+        System.out.println("No que sera removido = " + no7.getChave());
+        System.out.println("Filhos do no que sera removido: " + t.children(no7));
+        t.remocao(no7.getChave()); // sem filho
+        System.out.println(t.elements());
+        System.out.println("Size: " + t.size());
+
+
+
+
+        System.out.println("Filhos da raiz: " + t.children(no1));
+
+
+        System.out.println("_._._._._._._._._._._._._._._._._._._._.");
+        System.out.println("Caso 2: ");
+        System.out.println("No que sera removido = " + no2.getChave());
+        System.out.println("Filhos do no que sera removido: " + t.children(no2));
+        t.remocao(no2.getChave()); // com 1 filho
+        System.out.println(t.elements());
+//
+//        System.out.println("_._._._._._._._._._._._._._._._._._._._.");
+//        System.out.println("Caso 3: ");
+//        t.remocao(no4); // com 2 filho
+//        System.out.println(t.elements());
+
+
+
+
     }
-
-
-
 }
