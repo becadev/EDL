@@ -1,6 +1,5 @@
 package Arvore.ArvoreBinaria;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ArvoreBinaria implements AB {
@@ -18,12 +17,14 @@ public class ArvoreBinaria implements AB {
 
     @Override
     public Object leftchild(No v) { // pega o filho esquerdo de v
-        return v.getFilhoLeft().getChave();
+        return (hasLeft(v)) ? v.getFilhoLeft().getChave() : "nao tem filho esquerdo";
     }
 
     @Override
     public Object rightchild(No v) { // pega o filho direito de v
-        return v.getFilhoRight().getChave();
+//        if (v.getFilhoRight().getChave() == null) return null;
+        return (hasRight(v)) ? v.getFilhoRight().getChave() : "nao tem filho direito";
+//        return v.getFilhoRight().getChave();
     }
 
     @Override
@@ -45,9 +46,11 @@ public class ArvoreBinaria implements AB {
     public int height(No v) { // retorna a altura
         if (isExternal(v))
             return 0;
+
         int h = 0;
         for (No w : v.getFilhos()) {
-            h = Math.max(h, height(w));
+            if (w != null)
+                h = Math.max(h, height(w));
         }
         return 1 + h;
     }
@@ -58,16 +61,17 @@ public class ArvoreBinaria implements AB {
     }
 
     @Override
-    public Iterator<Object> elements() { // retorna um iterador para os elementos da arvore
-        inOrder();
-        return this.visitados.iterator();
-//  Iterator é um objeto que permite percorrer essa lista elemento por elemento, sem expor a estrutura interna.
+    public List<Object> elements() { // retorna um iterador para os elementos da arvore
+        this.visitados = new ArrayList<>();
+        preOrder(this.root);
+        return this.visitados;
     }
 
     @Override
-    public Iterator<No> nos() { // retorna um iterador para os nós da arvore
-        inOrder();
-        return this.nosVisitados.iterator();
+    public List<No> nos() { // retorna um iterador para os nós da arvore
+        this.nosVisitados = new ArrayList<>();
+        preOrder(this.root);
+        return this.nosVisitados;
     }
 
     @Override
@@ -81,17 +85,17 @@ public class ArvoreBinaria implements AB {
     }
 
     @Override
-    public Iterator<No> children(No no) { // retorna um iterator para os filhos
-        List<No> filhos = new ArrayList<>();
+    public List<Object> children(No no) { // retorna um iterator para os filhos
+        List<Object> filhos = new ArrayList<>();
 
         if (no.getFilhoLeft() != null) {
-            filhos.add(no.getFilhoLeft());
+            filhos.add(no.getFilhoLeft().getChave());
         }
 
         if (no.getFilhoRight() != null) {
-            filhos.add(no.getFilhoRight());
+            filhos.add(no.getFilhoRight().getChave());
         }
-        return filhos.iterator();
+        return filhos;
     }
 
     @Override
@@ -107,7 +111,7 @@ public class ArvoreBinaria implements AB {
 
     @Override
     public boolean isRoot(No no) { // verifica se o nó é raiz
-        return no.getPai().getChave() == this.root.getChave();
+        return no.getChave() == this.root.getChave();
     }
 
     @Override
@@ -145,23 +149,27 @@ public class ArvoreBinaria implements AB {
         return null;
     }
 
-    public void inserir(Object k) { // para poder usar na classe teste
-        this.root = insercao(this.root, k);
+    public No inserir(Object k) { // para poder usar na classe teste
+        No novoNo = new No(k);
+        this.tamanho++;
+        this.root = insercao(this.root, novoNo);
+        return novoNo;
     }
 
-    public No insercao(No v, Object k) {
+    public No insercao(No v, No k) {
         if (this.root == null) {
-            this.root = new No(k);
+            this.root = k;
             return this.root;
         } else {
             if (v == null) {
-                return new No(k);
+                v = k;
+                return v;
             }
             Comparable chave = (Comparable) v.getChave();
-            if (chave.compareTo(k) < 0) {// v < k então vai para esquerda
+            if (chave.compareTo(k.getChave()) < 0) {// v < k então vai para esquerda
                 v.setFilhoLeft(insercao(v.getFilhoLeft(), k));
                 v.getFilhoLeft().setPai(v);
-            } else if (chave.compareTo(k) > 0) {// v > k então vai para direita
+            } else if (chave.compareTo(k.getChave()) > 0) {// v > k então vai para direita
                 v.setFilhoRight(insercao(v.getFilhoRight(), k));
                 v.getFilhoRight().setPai(v);
             }
@@ -226,22 +234,38 @@ public class ArvoreBinaria implements AB {
         return k;
     }
 
-        public void inOrder () {
+        public List<Object> inOrder() {
+            this.visitados = new ArrayList<>();
             inOrderRec(this.root);
+            return this.visitados;
         }
 
+        public List<Object> preOrder(No v) {
+            this.visitados = new ArrayList<>();
+            preOrderRec(v);
+            return this.visitados;
+        }
 
-        public void preOrder (No v){ // um nó é visitado antes dos seus descendentes
-            System.out.println(v.getChave());
+        public void preOrderRec (No v){ // um nó é visitado antes dos seus descendentes
+            visite(v);
             for (No soon : v.getFilhos()) {
-                preOrder(soon);
+                if(soon != null)
+                    preOrderRec(soon);
             }
         }
-        public void postOrder (No v){ // um nó é visitado depois de seus descendentes
+        public List<Object> postOrder(No v) {
+            this.visitados = new ArrayList<>();
+            postOrderRec(v);
+            return this.visitados;
+        }
+
+
+        public void postOrderRec (No v){ // um nó é visitado depois de seus descendentes
+            if (v == null) return;
             for (No filho : v.getFilhos()) {
-                postOrder(filho);
+                postOrderRec(filho);
             }
-            System.out.print(v.getChave() + " ");
+            visite(v);
         }
 
         public void inOrderRec (No v){
@@ -255,7 +279,6 @@ public class ArvoreBinaria implements AB {
 
         public void visite (No v){ // vai colocar em um array ai com todos os coisado visitado, sei la
             this.visitados.add(v.getChave());
-            System.out.print(v.getChave() + " ");
             this.nosVisitados.add(v);
         }
 

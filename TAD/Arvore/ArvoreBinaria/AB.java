@@ -1,6 +1,6 @@
 package Arvore.ArvoreBinaria;
 
-import java.util.Iterator;
+import java.util.List;
 
 public interface AB {
     //  Métodos da AB
@@ -13,12 +13,12 @@ public interface AB {
     public int size();
     public int height(No v) ;
     public boolean isEmpty();
-    public Iterator<Object> elements();
-    public Iterator<No> nos();
+    public List<Object> elements();
+    public List<No> nos();
     // Métodos de acesso
     public No root();
     public No parent(No no);
-    public Iterator<No> children(No no);
+    public List<Object> children(No no);
 
     // Métodos de consulta
     public boolean isInternal(No no);
@@ -33,7 +33,7 @@ public interface AB {
     public No treeSearch(Object k, No v); // k = elemento que será buscado, v = pai dele
 
     // Método de inserção
-    public No insercao(No v, Object k);
+    public No insercao(No v, No k);
     // primeiro verifica se K ta na arvore
 
     // Método de remoção
