@@ -1,4 +1,4 @@
-package Heap;
+package Heap.PontoExtra;
 
 /*
 Para o nó na colocação i

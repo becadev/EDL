@@ -1,4 +1,4 @@
-package Heap;
+package Heap.PontoExtra;
 
 public interface HeapInter {
     public void insert(int o);
